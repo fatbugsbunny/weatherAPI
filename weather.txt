@@ -1,4 +1,4 @@
 City: Paris
-Temperature: 62.6F
-Humidity: 42%
-Wind: 12.5 mph
+Temperature: 15.0C
+Humidity: 55%
+Wind: 9.0 kph

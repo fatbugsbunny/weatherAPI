@@ -8,7 +8,6 @@ package WeatherAPI;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import java.io.BufferedWriter;
@@ -18,6 +17,7 @@ import java.io.FileWriter;
  *
  * @author HP NB
  */
+
 public class WeatherAPI {
 
     public static void main(String[] args) {
@@ -27,14 +27,14 @@ public class WeatherAPI {
         String cityString = sc.nextLine();
         String city = Character.toUpperCase(cityString.charAt(0)) + cityString.substring(1);
 
-        System.out.println("F (Fahrnheit) or C (Celsius) ?");
+        System.out.println("F (Fahrenheit) or C (Celsius) ?");
         String tempUnit = sc.nextLine().toLowerCase();
-        String windUnit = "";
+        String windUnit;
 
         System.out.println("Would you like to print the data to a file ? (y, n)");
         String location = sc.nextLine().toLowerCase();
 
-        if (tempUnit.equals("C")) {
+        if (tempUnit.equals("c")) {
             windUnit = "kph";
         } else {
             windUnit = "mph";
@@ -51,15 +51,15 @@ public class WeatherAPI {
                 System.out.println("City name may not be correct or there was a problem with the app");
                 throw new RuntimeException("Http response code:" + responseCode);
             } else {
-                String inline = "";
+                StringBuilder inline = new StringBuilder();
                 try (Scanner scanner = new Scanner(url.openStream())) {
                     while (scanner.hasNext()) {
-                        inline += scanner.nextLine();
+                        inline.append(scanner.nextLine());
                     }
                 }
 
                 JSONParser parse = new JSONParser();
-                JSONObject weatherData = (JSONObject) parse.parse(inline);
+                JSONObject weatherData = (JSONObject) parse.parse(inline.toString());
                 JSONObject weather = (JSONObject) weatherData.get("current");
 
                 String temperature = "The current temperature in " + city + " is " + weather.get("temp_" + tempUnit).toString() + tempUnit.toUpperCase() + " ";
